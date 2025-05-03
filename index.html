@@ -5,25 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WebGLn’t Redirect</title>
     <script>
-        window.onload = function() {
-            const defaultBase = 'https://turbowarp.org/editor?project_url=https://kylekart.github.io/ScratchExtensions/projects/webglnt.sb3';
-            
-            const nitroboltBase = 'https://forkbolt.miyo.lol/editor?project_url=https://kylekart.github.io/ScratchExtensions/projects/webglnt.sb3#0';
+window.onload = function() {
+    const defaultProject = 'https://kylekart.github.io/ScratchExtensions/projects/webglnt.sb3';
 
-            const urlParams = new URLSearchParams(window.location.search);
-            const baseUrl = urlParams.get('base');
+    // Predefined redirect URLs
+    const urls = {
+        tw: `https://turbowarp.org/editor?project_url=${defaultProject}`,
+        nb: `https://forkbolt.miyo.lol/editor?project_url=${defaultProject}#0`,
+        usb: `https://alpha.unsandboxed.org/editor?project_url=${defaultProject}#0`
+    };
 
-            let redirectUrl;
-            if (baseUrl === 'nitrobolt') {
-                redirectUrl = nitroboltBase;
-            } else if (baseUrl === 'turbowarp' || !baseUrl) {
-                redirectUrl = defaultBase;
-            } else {
-                redirectUrl = defaultBase;
-            }
+    const urlParams = new URLSearchParams(window.location.search);
 
-            window.location.href = redirectUrl;
-        };
+    let redirectUrl;
+
+    if (urlParams.has('nb')) {
+        redirectUrl = urls.nb;
+    } else if (urlParams.has('usb')) {
+        redirectUrl = urls.usb;
+    } else if (urlParams.has('tw')) {
+        redirectUrl = urls.tw;
+    } else {
+        // Default to TurboWarp if no param is present
+        redirectUrl = urls.tw;
+    }
+
+    window.location.href = redirectUrl;
+};
     </script>
 </head>
 <body>
